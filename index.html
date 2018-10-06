@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
+  <script language="javascript" src="libraries/p5.dom.js"></script>
+  <script language="javascript" type="text/javascript" src="sketch.js"></script>
+
+  <style type="text/css">
+  	body {
+  		padding:0;
+  		margin:0;
+      width:100%;
+  	}
+    li {
+      width:100%;
+    }
+    #avatar {
+      width:50px;
+      height:50px;
+      border-radius:50px;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+
+      function loops() {
+        $.getJSON("demouser.js", function(data) {
+          var items = [];
+          $.each( data, function( key, val ) {
+            items.push( 
+              "<p class='list-on-page'><img id='avatar' src='" + data[key].picture + "'/> " + data[key].name + " | Just Made A Purchase</p>");
+          })
+          var userNames = items[Math.floor(Math.random() * items.length)];
+          // console.log(userNames); // displays all users in the JSON file
+          console.log(userNames);
+          $('body').append(userNames)
+        });
+      }
+
+      //Returns a random integer between min and max
+      function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      // Interal fires function every 3 seconds
+      setInterval(function(){ 
+        $('.list-on-page').slideToggle();
+        // Fires random name funtion - data from JSON file
+        loops();
+        console.log(getRandomInt(8, 20) + '000');
+        // getRandomInt(8, 20) + '000')
+        $('.list-on-page').remove()
+      }, 3000);
+
+    });
+  </script>
+</head>
+<body>
+  <div class="elem-demo"></div>
+</body>
+</html>
